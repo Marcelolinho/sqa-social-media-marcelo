@@ -38,7 +38,7 @@ public class UserService {
   public void saveTestUser() {
     User user = new User();
     user.setEmail("pedroprofessor@email.com");
-    user.setEmail("Senha123");
+    user.setEmail("Senha@123");
     userRepository.save(user);
   }
 

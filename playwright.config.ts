@@ -63,14 +63,14 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: [
     {
-      command: 'java -jar target/demo-0.0.1-SNAPSHOT.jar',
+      command: 'cd api && java -jar target/demo-0.0.1-SNAPSHOT.jar',
       cwd: './api',
       url: 'http://localhost:8080',
       reuseExistingServer: !process.env.CI,
       timeout: 180_000,
     },
     {
-      command: 'npm run start',
+      command: 'cd client && npm run start',
       cwd: './client',
       url: 'http://localhost:3000',
       reuseExistingServer: !process.env.CI,

@@ -15,7 +15,8 @@ public class UserService {
   }
 
   public boolean isEmailValid(String email) {
-    return email != null && email.contains("@");
+    String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+    return Pattern.matches(emailRegex, email);
   }
 
   public boolean isPasswordValid(String password) {

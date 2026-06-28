@@ -23,11 +23,11 @@ jobs:
       run: cd client && npm ci && npm run build
 
     - name: Install dependencies
-      run: npm ci
+      run: cd e2e && npm ci
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: cd e2e && npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      run: cd e2e && npx playwright test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:

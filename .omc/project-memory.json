@@ -1,0 +1,141 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1782610672440,
+  "projectRoot": "/home/marcelo/sqa-social-media-marcelo",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "@playwright/test",
+        "version": "1.61.0",
+        "category": "testing"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {
+      "test:e2e": "playwright test",
+      "test:e2e:ui": "playwright test --ui",
+      "test:e2e:report": "playwright show-report"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "api": {
+      "path": "api",
+      "purpose": "API routes",
+      "fileCount": 6,
+      "lastAccessed": 1782610672426,
+      "keyFiles": [
+        "README.md",
+        "mvnw",
+        "mvnw.cmd",
+        "pom.xml"
+      ]
+    },
+    "client": {
+      "path": "client",
+      "purpose": null,
+      "fileCount": 12,
+      "lastAccessed": 1782610672426,
+      "keyFiles": [
+        "README.md",
+        "eslint.config.mjs",
+        "jest.config.ts",
+        "jest.setup.ts",
+        "next-env.d.ts"
+      ]
+    },
+    "e2e": {
+      "path": "e2e",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1782610672433,
+      "keyFiles": []
+    },
+    "playwright-report": {
+      "path": "playwright-report",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1782610672434,
+      "keyFiles": [
+        "index.html"
+      ]
+    },
+    "test-results": {
+      "path": "test-results",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1782610672435,
+      "keyFiles": []
+    },
+    "api/src": {
+      "path": "api/src",
+      "purpose": "Source code",
+      "fileCount": 0,
+      "lastAccessed": 1782610672436,
+      "keyFiles": []
+    },
+    "e2e/api": {
+      "path": "e2e/api",
+      "purpose": "API routes",
+      "fileCount": 4,
+      "lastAccessed": 1782610672436,
+      "keyFiles": [
+        "liked-posts.spec.ts",
+        "reset-password.spec.ts",
+        "signin-json.spec.ts"
+      ]
+    },
+    "e2e/helpers": {
+      "path": "e2e/helpers",
+      "purpose": "Helper functions",
+      "fileCount": 3,
+      "lastAccessed": 1782610672437,
+      "keyFiles": [
+        "api.ts",
+        "auth.helper.ts",
+        "user.factory.ts"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "api/src/test/java/com/demoapp/demo/usecases/PostsTest.java",
+      "accessCount": 2,
+      "lastAccessed": 1782610905156,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

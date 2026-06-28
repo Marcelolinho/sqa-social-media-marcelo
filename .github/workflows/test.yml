@@ -35,6 +35,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: Start database
+        run: docker compose up -d --wait
+
       - name: Run Playwright tests
         run: npx playwright test
 

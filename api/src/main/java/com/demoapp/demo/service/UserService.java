@@ -1,6 +1,9 @@
 package com.demoapp.demo.service;
 
 import java.util.regex.Pattern;
+
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import com.demoapp.demo.model.User;
 
@@ -29,6 +32,14 @@ public class UserService {
     user.setEmail(email);
     user.setPassword(password);
     return userRepository.save(user);
+  }
+
+  @EventListener(ApplicationReadyEvent.class)
+  public void saveTestUser() {
+    User user = new User();
+    user.setEmail("pedroprofessor@email.com");
+    user.setEmail("Senha123");
+    userRepository.save(user);
   }
 
   public User findByEmail(String email) {

@@ -65,7 +65,7 @@ export default defineConfig({
     {
       command: 'java -jar target/demo-0.0.1-SNAPSHOT.jar',
       cwd: './api',
-      url: 'http://localhost:8080',
+      url: 'tcp://localhost:8080',
       reuseExistingServer: !process.env.CI,
       timeout: 180_000,
       stdout: 'pipe',

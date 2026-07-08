@@ -55,22 +55,50 @@ export default function Home() {
       return;
     }
 
+    const result = await postsService.toggleLikePost({
+      postId,
+      userId: user.id,
+    });
+
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
-        post.id === postId ? { ...post, liked: !post.liked } : post
+        post.id === postId
+          ? {
+              ...post,
+              liked: result.liked,
+              disliked: result.disliked,
+              likes: result.likes,
+              dislikes: result.dislikes,
+            }
+          : post
       )
     );
+  }
 
-    try {
-      await postsService.toggleLikePost({ postId, userId: user.id });
-    } catch {
-      setPosts((prevPosts) =>
-        prevPosts.map((post) =>
-          post.id === postId ? { ...post, liked: !post.liked } : post
-        )
-      );
-      alert("Erro ao curtir post. Tente novamente.");
+  async function handleDislike(postId: number) {
+    if (!user) {
+      alert("Você precisa estar autenticado para descurtir posts!");
+      return;
     }
+
+    const result = await postsService.toggleDislikePost({
+      postId,
+      userId: user.id,
+    });
+
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId
+          ? {
+              ...post,
+              liked: result.liked,
+              disliked: result.disliked,
+              likes: result.likes,
+              dislikes: result.dislikes,
+            }
+          : post
+      )
+    );
   }
 
   function handleLoadMore() {
@@ -132,6 +160,7 @@ export default function Home() {
                   post={post}
                   isAuthenticated={isAuthenticated}
                   onLike={handleLike}
+                  onDislike={handleDislike}
                 />
               ))}
             </div>

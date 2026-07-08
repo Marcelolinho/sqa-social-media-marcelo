@@ -27,6 +27,17 @@ export interface Post {
   title: string;
   body: string;
   liked: boolean;
+  disliked: boolean;
+  likes: number;
+  dislikes: number;
+}
+
+export interface ToggleReactionResponse {
+  postId: number;
+  liked: boolean;
+  disliked: boolean;
+  likes: number;
+  dislikes: number;
 }
 
 export interface PostsResponse {

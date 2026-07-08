@@ -58,7 +58,7 @@ test.describe("Like a post — authenticated", () => {
     await expect(
       btn,
       "post should start in the unliked state"
-    ).toHaveText(/Curtir/);
+    ).toHaveAttribute("aria-pressed", "false");
 
     const response = await clickLikeAndCaptureResponse(page, btn.click());
 
@@ -72,13 +72,13 @@ test.describe("Like a post — authenticated", () => {
 
     await expect(
       btn,
-      "button label should change to Curtido after liking"
-    ).toHaveText(/Curtido/);
+      "button should switch to the liked (pressed) state after liking"
+    ).toHaveAttribute("aria-pressed", "true");
 
     await expect(
-      card.getByText("❤️"),
-      "filled heart should be shown after liking"
-    ).toBeVisible();
+      btn,
+      "button accessible name should become Curtido after liking"
+    ).toHaveAccessibleName("Curtido");
 
     const userId = await currentUserId(page);
 
@@ -107,7 +107,7 @@ test.describe("Like a post — authenticated", () => {
     expect(likeResp.status()).toBe(200);
     expect((await likeResp.json()).liked).toBe(true);
 
-    await expect(btn).toHaveText(/Curtido/);
+    await expect(btn).toHaveAttribute("aria-pressed", "true");
 
     const unlikeResp = await clickLikeAndCaptureResponse(page, btn.click());
 
@@ -120,8 +120,8 @@ test.describe("Like a post — authenticated", () => {
 
     await expect(
       btn,
-      "button label should revert to Curtir after unliking"
-    ).toHaveText(/Curtir/);
+      "button should revert to the unliked state after unliking"
+    ).toHaveAttribute("aria-pressed", "false");
 
     const userId = await currentUserId(page);
     const likedResp = await request.get(`${API_URL}/posts/liked`, {
@@ -156,10 +156,11 @@ test.describe("Like a post — unauthenticated", () => {
     const card = firstPostCard(page);
     const btn = likeButton(card);
 
-    await expect(btn, "unauthenticated user still sees the like button").toHaveText(
-      /Curtir/
-    );
-    
+    await expect(
+      btn,
+      "unauthenticated user still sees the like button"
+    ).toHaveAttribute("aria-pressed", "false");
+
     await btn.click();
 
     expect(
@@ -174,6 +175,6 @@ test.describe("Like a post — unauthenticated", () => {
     await expect(
       btn,
       "button must remain in the unliked state"
-    ).toHaveText(/Curtir/);
+    ).toHaveAttribute("aria-pressed", "false");
   });
 });

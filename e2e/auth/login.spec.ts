@@ -20,24 +20,18 @@ test.describe("Login (/signin)", () => {
   });
 
   test("happy path: logs in with valid credentials", async ({ page, request }) => {
-    const user = makeUser();
-    await seedUser(request, user);
-
-    await emailInput(page).fill(user.email);
-    await passwordInput(page).fill(user.password);
+    await emailInput(page).fill("pedroprofessor@email.com");
+    await passwordInput(page).fill("Senha@123");
     await submitBtn(page).click();
 
     await expect(page).toHaveURL("/");
     const stored = await page.evaluate(() => localStorage.getItem("user"));
-    expect(stored).toContain(user.email);
+    expect(stored).toContain("pedroprofessor@email.com");
   });
 
   test("wrong password: shows invalid-credentials error", async ({ page, request }) => {
-    const user = makeUser();
-    await seedUser(request, user);
-
-    await emailInput(page).fill(user.email);
-    await passwordInput(page).fill("Wrong@999");
+    await emailInput(page).fill("pedroprofessor@email.com");
+    await passwordInput(page).fill("Naovaidarcerto@999");
     await submitBtn(page).click();
 
     await expect(page.getByText("Credenciais inválidas")).toBeVisible();
@@ -67,17 +61,14 @@ test.describe("Login (/signin)", () => {
     page,
     request,
   }) => {
-    const user = makeUser();
-    await seedUser(request, user);
-
-    await emailInput(page).fill(user.email);
-    await passwordInput(page).fill(user.password);
+    await emailInput(page).fill("pedroprofessor@email.com");
+    await passwordInput(page).fill("Senha@123");
     await submitBtn(page).click();
     await expect(page).toHaveURL("/");
 
     await page.reload();
 
     const stored = await page.evaluate(() => localStorage.getItem("user"));
-    expect(stored).toContain(user.email);
+    expect(stored).toContain("pedroprofessor@email.com");
   });
 });

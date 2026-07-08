@@ -65,9 +65,11 @@ export default defineConfig({
     {
       command: 'java -jar target/demo-0.0.1-SNAPSHOT.jar',
       cwd: './api',
-      url: 'http://localhost:8080',
+      url: 'http://localhost:8080/actuator/health',
       reuseExistingServer: !process.env.CI,
       timeout: 180_000,
+      stdout: 'pipe',
+      stderr: 'pipe',
     },
     {
       command: 'npm run start',
@@ -75,6 +77,8 @@ export default defineConfig({
       url: 'http://localhost:3000',
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
+      stdout: 'pipe',  // <-- isso
+      stderr: 'pipe',
     },
   ],
 });

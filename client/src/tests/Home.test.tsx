@@ -22,6 +22,7 @@ jest.mock("../service/posts/posts", () => ({
   postsService: {
     getPosts: jest.fn(),
     toggleLikePost: jest.fn(),
+    toggleDislikePost: jest.fn(),
   },
 }));
 
@@ -35,6 +36,9 @@ const postsDeMock = [
     title: "Post de Teste",
     body: "Conteúdo do post de teste para integração",
     liked: false,
+    disliked: false,
+    likes: 0,
+    dislikes: 0,
   },
 ];
 
@@ -84,7 +88,13 @@ describe("apenasUsuariosLogadosPodemCurtirPosts", () => {
       skip: 0,
       limit: 10,
     });
-    mockToggleLikePost.mockResolvedValue(undefined);
+    mockToggleLikePost.mockResolvedValue({
+      postId: 1,
+      liked: true,
+      disliked: false,
+      likes: 1,
+      dislikes: 0,
+    });
 
     render(<Home />);
 

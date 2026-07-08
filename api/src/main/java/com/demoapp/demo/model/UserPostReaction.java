@@ -1,5 +1,6 @@
 package com.demoapp.demo.model;
 
+import com.demoapp.demo.model.enums.EnumLikeDislike;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 
@@ -13,6 +14,10 @@ public class UserPostReaction {
 
   private Long userId;
   private Long postId;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "type")
+  private EnumLikeDislike type;
 
   public Long getId() {
     return id;
@@ -38,5 +43,12 @@ public class UserPostReaction {
     this.postId = postId;
   }
 
+  public EnumLikeDislike getType() {
+    return type;
+  }
+
+  public void setType(EnumLikeDislike type) {
+    this.type = type;
+  }
 }
 

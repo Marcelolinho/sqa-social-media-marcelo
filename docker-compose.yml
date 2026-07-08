@@ -12,6 +12,11 @@ services:
       - 3306:3306
     volumes:
       - fag_quality:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pqualidade123"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
 volumes:
   fag_quality:

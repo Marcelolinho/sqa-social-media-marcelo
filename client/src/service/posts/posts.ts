@@ -1,5 +1,9 @@
 import api from "@/service/api";
-import { PostsResponse, LikedPostsResponse } from "@/service/types";
+import {
+  PostsResponse,
+  LikedPostsResponse,
+  ToggleReactionResponse,
+} from "@/service/types";
 
 interface GetPostsParams {
   skip?: number;
@@ -35,15 +39,33 @@ async function getLikedPosts(
   return response.data;
 }
 
-async function toggleLikePost(params: LikePostParams): Promise<void> {
+async function toggleLikePost(
+  params: LikePostParams
+): Promise<ToggleReactionResponse> {
   const { postId, userId } = params;
-  await api.post(`/posts/${postId}/like`, null, {
-    params: { userId },
-  });
+  const response = await api.post<ToggleReactionResponse>(
+    `/posts/${postId}/like`,
+    null,
+    { params: { userId } }
+  );
+  return response.data;
+}
+
+async function toggleDislikePost(
+  params: LikePostParams
+): Promise<ToggleReactionResponse> {
+  const { postId, userId } = params;
+  const response = await api.post<ToggleReactionResponse>(
+    `/posts/${postId}/dislike`,
+    null,
+    { params: { userId } }
+  );
+  return response.data;
 }
 
 export const postsService = {
   getPosts,
   getLikedPosts,
   toggleLikePost,
+  toggleDislikePost,
 };

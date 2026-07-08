@@ -7,14 +7,15 @@ interface PostCardProps {
   post: Post;
   isAuthenticated: boolean;
   onLike: (postId: number) => Promise<void>;
+  onDislike: (postId: number) => Promise<void>;
 }
 
 export default function PostCard({
   post,
   isAuthenticated,
   onLike,
+  onDislike,
 }: PostCardProps) {
-  const [liked, setLiked] = useState(post.liked);
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleLike() {
@@ -24,14 +25,26 @@ export default function PostCard({
     }
 
     setIsLoading(true);
-    const previousLiked = liked;
-    setLiked(!liked);
-
     try {
       await onLike(post.id);
     } catch {
-      setLiked(previousLiked);
       alert("Erro ao curtir post. Tente novamente.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function handleDislike() {
+    if (!isAuthenticated) {
+      alert("Você precisa estar autenticado para descurtir posts!");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await onDislike(post.id);
+    } catch {
+      alert("Erro ao descurtir post. Tente novamente.");
     } finally {
       setIsLoading(false);
     }
@@ -80,7 +93,7 @@ export default function PostCard({
       <div
         style={{
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
           alignItems: "center",
           marginTop: "1rem",
         }}
@@ -88,10 +101,14 @@ export default function PostCard({
         <button
           onClick={handleLike}
           disabled={isLoading}
+          aria-pressed={post.liked}
+          aria-label={post.liked ? "Curtido" : "Curtir"}
           style={{
-            background: liked ? "var(--secondary)" : "transparent",
-            color: liked ? "white" : "var(--foreground)",
-            border: `2px solid ${liked ? "var(--secondary)" : "var(--border)"}`,
+            background: post.liked ? "var(--secondary)" : "transparent",
+            color: post.liked ? "white" : "var(--foreground)",
+            border: `2px solid ${
+              post.liked ? "var(--secondary)" : "var(--border)"
+            }`,
             padding: "0.5rem 1.25rem",
             borderRadius: "0.375rem",
             cursor: isLoading ? "not-allowed" : "pointer",
@@ -111,8 +128,41 @@ export default function PostCard({
             e.currentTarget.style.transform = "scale(1)";
           }}
         >
-          <span style={{ fontSize: "1.25rem" }}>{liked ? "❤️" : "🤍"}</span>
-          <span>{isLoading ? "..." : liked ? "Curtido" : "Curtir"}</span>
+          <span>👍</span>
+          <span>{post.likes}</span>
+        </button>
+        <button
+          onClick={handleDislike}
+          disabled={isLoading}
+          aria-pressed={post.disliked}
+          aria-label={post.disliked ? "Não gostei marcado" : "Não gostei"}
+          style={{
+            background: post.disliked ? "var(--secondary)" : "transparent",
+            color: post.disliked ? "white" : "var(--foreground)",
+            border: `2px solid ${
+              post.disliked ? "var(--secondary)" : "var(--border)"
+            }`,
+            padding: "0.5rem 1.25rem",
+            borderRadius: "0.375rem",
+            cursor: isLoading ? "not-allowed" : "pointer",
+            fontWeight: "500",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            transition: "all 0.2s",
+            opacity: isLoading ? 0.7 : 1,
+          }}
+          onMouseOver={(e) => {
+            if (!isLoading) {
+              e.currentTarget.style.transform = "scale(1.05)";
+            }
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+          }}
+        >
+          <span>👎</span>
+          <span>{post.dislikes}</span>
         </button>
       </div>
     </div>

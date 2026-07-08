@@ -1,6 +1,9 @@
 package com.demoapp.demo.service;
 
 import java.util.regex.Pattern;
+
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import com.demoapp.demo.model.User;
 
@@ -15,7 +18,8 @@ public class UserService {
   }
 
   public boolean isEmailValid(String email) {
-    return email != null && email.contains("@");
+    String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+    return Pattern.matches(emailRegex, email);
   }
 
   public boolean isPasswordValid(String password) {
@@ -28,6 +32,14 @@ public class UserService {
     user.setEmail(email);
     user.setPassword(password);
     return userRepository.save(user);
+  }
+
+  @EventListener(ApplicationReadyEvent.class)
+  public void saveTestUser() {
+    User user = new User();
+    user.setEmail("pedroprofessor@email.com");
+    user.setEmail("Senha@123");
+    userRepository.save(user);
   }
 
   public User findByEmail(String email) {

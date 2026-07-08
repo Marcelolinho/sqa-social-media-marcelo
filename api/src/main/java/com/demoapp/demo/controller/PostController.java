@@ -77,4 +77,25 @@ public class PostController {
     }
   }
 
+  @PostMapping("/{postId}/dislike")
+  public ResponseEntity<?> toggleDislike(
+          @PathVariable Long postId,
+          @RequestParam Long userId) {
+
+    try {
+      if (userId == null) {
+        return ResponseEntity
+                .status(400)
+                .body(new ErrorResponse("userId é obrigatório", 400));
+      }
+
+      Map<String, Object> result = postService.toggleDislike(postId, userId);
+      return ResponseEntity.ok(result);
+    } catch (Exception e) {
+      return ResponseEntity
+              .status(500)
+              .body(new ErrorResponse("Erro ao curtir post: " + e.getMessage(), 500));
+    }
+  }
+
 }
